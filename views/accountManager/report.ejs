@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Report Analysis - Express</title>
+</head>
+<body style="background-color:gray;color:white;">
+	<div style="height:150px;background-color:rgb(44,237,14);margin-top:0px;">
+		<h1 style="margin-left:50px;">
+			<br/>Report / Activity Details - Account Manager
+		</h1>
+		<a href="/accountManager/home" style="margin-left:900px;">Home</a>
+		<a href="/generalController/logout" style="margin-left:10px;">logout</a>
+	</div>
+
+	<div style="width:90%;padding:20px">
+		<br/><br/><br/><center>
+		User Activity Details / Report : <br/><br/> <!-- <input type="text" style="width:20%;border-radius:15px;background-color:gray;"><input type="button" style="border-radius:15px;background-color:dodgerblue" value=" search "> --><br/><br/>
+		<table border="2px">
+			<tr>
+				<th>UserID</th>
+				<th>Name</th>
+				<th>Phone</th>
+				<th>User Type</th>
+				<th>Account Type</th>
+				<th>Account Status</th>
+				<th>Block Status</th>
+			</tr>
+			<% for(var i=0; i < userRes.length; i++){ %>	
+				<tr>
+					<td><%= userRes[i].user_id %></td>
+					<td><%= userRes[i].username %></td>
+					<td><%= userRes[i].phone_number %></td>
+					<td> 
+					<% if(userRes[i].user_type_id == 20) {%>
+					<p style="border-radius:15px;background-color:lime;padding:10px">" Admin User "</p>
+					<% } else if(userRes[i].user_type_id == 21){ %>
+							<p style="border-radius:15px;background-color:lime;padding:10px">" Content Manager User "</p>
+					<% } else if(userRes[i].user_type_id == 22){ %>
+							<p style="border-radius:15px;background-color:lime;padding:10px">" Account Manager User "</p>
+					<% } else{ %>
+							<p style="border-radius:15px;background-color:lime;padding:10px">" General User "</p>
+					<% } %>
+					</td>
+					<td>
+					<% if(userRes[i].account_type_id == 30) {%>
+					<p style="border-radius:15px;background-color:lime;padding:10px">" Public Account "</p>
+					<% } else if(userRes[i].account_type_id == 31){ %>
+							<p style="border-radius:15px;background-color:lime;padding:10px">" Private Account "</p>
+					<% } else{ %>
+							<p style="border-radius:15px;background-color:lime;padding:10px">" Annonymous Account "</p>
+					<% } %>
+					</td>
+					<td>
+					<% if(userRes[i].account_status_id == 10) {%>
+					<p style="border-radius:15px;background-color:lime;padding:10px">" Account Activated "</p>
+					<% } else if(userRes[i].account_status_id == 11){ %>
+							<p style="border-radius:15px;background-color:yellow;padding:10px">" Account Deactivated "</p>
+					<% } else{ %>
+							<p style="border-radius:15px;background-color:red;padding:10px">" Account Blocked "</p>
+					<% } %>
+					</td>
+					<td>
+					<% for(var j=0; j < blockRes.length; j++){ %>
+						<% if(userRes[i].user_id == blockRes[j].user_id) {%>
+						<p style="border-radius:15px;background-color:red;padding:10px"> Pending </p>
+						<% break; } else{ %>
+								
+						<% } %>
+					<% } %>
+					</td>
+				</tr>
+			<% } %>
+		</table><br/><br/>
+		<a href="/accountManager/report/ready">Download</a>
+		</center>
+	</div>
+
+</body>
+</html>
